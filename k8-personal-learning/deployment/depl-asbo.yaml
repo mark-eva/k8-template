@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-asbo
+  labels:
+    app.kubernetes.io/name: app-asbo
+    app.kubernetes.io/part-of: app-asbo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: app-asbo
+      app.kubernetes.io/part-of: app-asbo
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: app-asbo
+        app.kubernetes.io/part-of: app-asbo
+    spec:
+      containers:
+      - name: app-asbo
+        image: shikamaky/asbo8080
+        ports:
+        - containerPort: 9090 
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-asbo
+  labels:
+    app.kubernetes.io/name: app-asbo
+    app.kubernetes.io/part-of: app-asbo
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app.kubernetes.io/name: app-asbo
+    app.kubernetes.io/part-of: app-asbo

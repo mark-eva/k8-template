@@ -1,0 +1,52 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: host-rule-ingress
+spec:
+  defaultBackend:
+    service:
+      name: default-backend
+      port:
+        number: 80
+  rules:
+  - host: prom.bagelware.xyz
+    http:
+      paths:
+      - backend:
+          service:
+            name: monitoring-prometheus
+            port:
+              number: 80
+        pathType: ImplementationSpecific
+  - host: graf.bagelware.xyz
+    http:
+      paths:
+      - backend:
+          service:
+            name: monitoring-grafana
+            port:
+              number: 80
+        pathType: ImplementationSpecific
+  - host: bbox.bagelware.xyz
+    http:
+      paths:
+      - backend:
+          service:
+            name: monitoring-blackbox-exporter
+            port:
+              number: 80
+        pathType: ImplementationSpecific
+        
+
+  
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  

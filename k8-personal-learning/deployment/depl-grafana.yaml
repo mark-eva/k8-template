@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monitoring-grafana
+  labels:
+    app.kubernetes.io/name: monitoring-grafana
+    app.kubernetes.io/part-of: monitoring-grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: monitoring-grafana
+      app.kubernetes.io/part-of: monitoring-grafana
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: monitoring-grafana
+        app.kubernetes.io/part-of: monitoring-grafana
+    spec:
+      containers:
+      - name: monitoring-grafana
+        image: grafana/grafana
+        ports:
+        - containerPort: 3000 
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: monitoring-grafana
+  labels:
+    app.kubernetes.io/name: monitoring-grafana
+    app.kubernetes.io/part-of: monitoring-grafana
+spec:
+  ports:
+  - port: 80
+    targetPort: 3000
+  selector:
+    app.kubernetes.io/name: monitoring-grafana
+    app.kubernetes.io/part-of: monitoring-grafana

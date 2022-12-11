@@ -1,0 +1,44 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: path-rule-ingress
+  annotations:
+    kubernetes.io/ingress.class:  "nginx"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  defaultBackend:
+    service:
+      name: default-backend
+      port:
+        number: 80
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: monitoring-prometheus
+            port:
+              number: 80
+        path: /prom
+        pathType: Prefix
+  # - http:
+  #     paths:
+  #     - backend:
+  #         service:
+  #           name: nginxhello-red
+  #           port:
+  #             number: 80
+  #       path: /red
+  #       pathType: Prefix
+
+  # - http:
+  #     paths:
+  #     - backend:
+  #         service:
+  #           name: app-asbo
+  #           port:
+  #             number: 80
+  #       path: /green
+  #       pathType: Prefix
